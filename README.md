@@ -1,4 +1,4 @@
-#  Social network like Facebook
+###  Social network like Facebook
 
 
 ## Technologies used
@@ -8,6 +8,7 @@
 
 
 
+#  Installation and run
 
  1: install => npm install
  2: run => npm start 
