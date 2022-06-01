@@ -1,10 +1,10 @@
 #  Social network like Facebook
 
 
-## Techs
+## Technologies used
 
-#### `React js`
-#### `Mongodb`
+##### `React js`
+##### `Mongodb`
 
 
 
