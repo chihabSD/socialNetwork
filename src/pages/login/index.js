@@ -1,7 +1,13 @@
 import React from 'react'
+import { useRedux } from '../../hooks/useRedux'
+import { _nativeLogin } from '../../redux/actions/auth/login'
 
-export default function Login() {
+
+const  Login =  () => {
+  const { authenticated } = useRedux()
   return (
-    <div>Login </div>
+    <div>index</div>
   )
 }
+
+export default Login 
