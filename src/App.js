@@ -1,9 +1,16 @@
-function App() {
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Profile from "./pages/profile";
+
+const App = () => {
   return (
-    <div className="App">
-    <p> Testing </p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
-}
+};
 
 export default App;
