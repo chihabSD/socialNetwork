@@ -36,20 +36,21 @@ a {
   --shadow-inset: rgba(255, 255, 255, 0.5);
 }
 
-/* Buttons */
+/*----Buttons----*/
 .blue_btn {
   border: none;
   outline: none;
+  background: var(--blue-color);
   padding: 8.5px 12px;
   border-radius: 7px;
   font-family: inherit;
   font-weight: 600;
   font-size: 14px;
+  color: #fff;
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
   gap: 6px;
   cursor: pointer;
-  background: var(--blue-color);
-  color: #fff;
 }
+/*----Buttons----*/
