@@ -2,6 +2,7 @@ import "./style.css";
 import { Formik, Form, setIn } from "formik";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import * as Yup from  'yup'
 import LoginInput from "../../components/inputs/loginInput";
 const Login = () => {
   const loginInfo = {
@@ -16,6 +17,12 @@ const Login = () => {
   const {name, value} = e.target
     setInputs({...inputs, [name]:value})
   };
+// Validation schema
+const loginValidation = Yup.object({
+  email: Yup.string().required(" Email address is required").email(' Must be a valid email.').max(100), 
+  password:Yup.string().required(' Password is required')
+})
+
   return (
     <div className="login">
       <div className="login_wrapper">
@@ -28,7 +35,7 @@ const Login = () => {
           </div>
           <div className="login_2">
             <div className="login_2_wrap">
-              <Formik enableReinitialize initialValues={{ email, password }}>
+              <Formik enableReinitialize initialValues={{ email, password }} validationSchema={loginValidation}>
                 {(formik) => (
                   <Form>
                     <LoginInput
@@ -42,6 +49,7 @@ const Login = () => {
                       name="password"
                       placeholder="Password"
                       onChange={handleLogin}
+                      bottom
                     />
                     <button type="submit" className="blue_btn">
                       {" "}

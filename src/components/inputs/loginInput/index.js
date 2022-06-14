@@ -1,19 +1,36 @@
-import { useField, useFormik } from "formik";
+import { ErrorMessage, useField, useFormik } from "formik";
 import React from "react";
 import "./style.css";
-const LoginInput = ({ placeholder, ...props }) => {
+const LoginInput = ({ placeholder,bottom,  ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className="input_wrap">
+        {meta.touched && meta.error && !bottom && (
+ <div className="input_error" style={{transform: "translateY(3px)"}}>
+ {meta.touched && meta.error && <ErrorMessage name={field.name} />}
+ {meta.touched && meta.error && (<div className="error_wrap_top"></div>)}
+</div>
+        )}
+       
       <input
+      className={meta.touched && meta.error ? 'input_error_border' :""}
         type={field.type}
         name={field.name}
-        // onChange={...handleLogin}
         placeholder={placeholder}
         {...field}
         {...props}
 
       />
+
+{meta.touched && meta.error && bottom && (
+//  <div className="input_error">
+      <div className="input_error" style={{transform: "translateY(3px)"}}>
+ {meta.touched && meta.error && <ErrorMessage name={field.name} />}
+ {meta.touched && meta.error && <div className="error_wrap_bottom"></div>}
+</div>
+        )}
+
+    {meta.touched && meta.error && <i className="error_icon" style={{top:`${!bottom && "63%"}`}} /> }
     </div>
   );
 };
