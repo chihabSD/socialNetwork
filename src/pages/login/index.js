@@ -1,7 +1,10 @@
-import "./style.css";
-import { Formik, Form, setIn } from "formik";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+// styles
+import "./style.css";
+import "./style-media.css";
+// end of styles
+import { Formik, Form  } from "formik";
+import { Link } from "react-router-dom";
 import * as Yup from  'yup'
 import LoginInput from "../../components/inputs/loginInput";
 const Login = () => {
@@ -65,7 +68,7 @@ const loginValidation = Yup.object({
               <button className="blue_btn open_signup">Create Account</button>
             </div>
             <Link to="/" className="sign_extra">
-              <b>Create a Page</b>
+              <b>Create a Page</b> {" "}
               for a celebrity, brand or business.
             </Link>
           </div>
