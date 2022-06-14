@@ -1,9 +1,9 @@
-import { Form, Formik } from "formik";
 import { useState } from "react";
-// import RegisterInput from "../inputs/registerInput";
+import { Form, Formik } from "formik";
 
 import RegisterInput from "../inputs/regiserInput";
-const RegisterForm = () => {
+import * as Yup from  'yup'
+const  RegisterForm = () => {
   const userInfos = {
     first_name: "",
     last_name: "",
@@ -36,6 +36,33 @@ const RegisterForm = () => {
     return new Date(bYear, bMonth, 0).getDate();
   };
   const days = Array.from(new Array(getDays()), (val, index) => 1 + index);
+  
+
+  const registerValidation = Yup.object({
+    first_name: Yup.string()
+      .required("What's your First name ?")
+      .min(2, "Fisrt name must be between 2 and 16 characters.")
+      .max(16, "Fisrt name must be between 2 and 16 characters.")
+      .matches(/^[aA-zZ]+$/, "Numbers and special characters are not allowed."),
+    last_name: Yup.string()
+      .required("What's your Last name ?")
+      .min(2, "Last name must be between 2 and 16 characters.")
+      .max(16, "Last name must be between 2 and 16 characters.")
+      .matches(/^[aA-zZ]+$/, "Numbers and special characters are not allowed."),
+    email: Yup.string()
+      .required(
+        "You'll need this when you log in and if you ever need to reset your password."
+      )
+      .email("Enter a valid email address."),
+    password: Yup.string()
+      .required(
+        "Enter a combination of at least six numbers,letters and punctuation marks(such as ! and &)."
+      )
+      .min(6, "Password must be atleast 6 characters.")
+      .max(36, "Password can't be more than 36 characters"),
+  });
+  const [dateError, setDateError] = useState("");
+  const [genderError, setGenderError] = useState("");
   return (
     <div className="blur">
       <div className="register">
@@ -44,7 +71,19 @@ const RegisterForm = () => {
           <span>Sign Up</span>
           <span>it's quick and easy</span>
         </div>
-        <Formik>
+        <Formik
+          enableReinitialize
+          initialValues={{
+            first_name,
+            last_name,
+            email,
+            password,
+            bYear,
+            bMonth,
+            bDay,
+            gender,
+          }}
+          validationSchema={registerValidation}>
           {(formik) => (
             <Form className="register_form">
               <div className="reg_line">
@@ -171,165 +210,4 @@ const RegisterForm = () => {
   );
 }
 
-
-// import { Form, Formik } from "formik";
-// import React, { useState } from "react";
-// import RegisterInput from "../inputs/regiserInput";
-
-// const RegisterForm = () => {
-//   const userInfos = {
-//     first_name: "",
-//     last_name: "",
-//     email: "",
-//     password: "",
-//     bYear: new Date().getFullYear(),
-//     bMonth: new Date().getMonth() + 1,
-//     bDay: new Date().getDate(),
-//     gender: "",
-//   };
-
-//   const [inputs, setInputs] = useState(userInfos);
-//   const {
-//     first_name,
-//     last_name,
-//     email,
-//     password,
-//     bYear,
-//     bDay,
-//     bMonth,
-//     gender,
-//   } = inputs;
-//   const handleRegister = (e) => {
-//     const { name, value } = e.target;
-//     setInputs({ ...inputs, [name]: value });
-//   };
-//   const years = Array.from(new Array(108), (val, index) => bYear - index);
-//   const months = Array.from(new Array(12), (val, index) => 1 + index);
-
-// // generate days
-// const getDays = () => {
-//     return new Date(bYear, bMonth, 0).getDate()
-// }
-
-// // get number of days 
-//   const days = Array.from(new Array(getDays()), (val, index) => 1 + index);
-//   console.log(days);
-//   return (
-//     <div className="blur">
-//       <div className="register">
-//         <div className="register_header">
-//           <i className="exit_icon"></i>
-//           <span>Sign up</span>
-//           <span> it's a quick and easy </span>
-//         </div>
-//         <Formik>
-//           {(formik) => (
-//             <Form className="register_form">
-//               <div className="reg_line">
-//                 <RegisterInput
-//                   type="text"
-//                   placeholder="First name"
-//                   name="first_name"
-//                   onChange={handleRegister}
-//                 />
-
-//                 <RegisterInput
-//                   type="text"
-//                   placeholder="Surname"
-//                   name="last_name"
-//                   onChange={handleRegister}
-//                 />
-//               </div>
-
-//               <div className="reg_line">
-//                 <RegisterInput
-//                   type="text"
-//                   placeholder="Mobile number or email address"
-//                   name="email"
-//                   onChange={handleRegister}
-//                 />
-//               </div>
-//               <div className="reg_line">
-//                 <RegisterInput
-//                   type="password"
-//                   placeholder="New password"
-//                   name="password"
-//                   onChange={handleRegister}
-//                 />
-//               </div>
-
-//               <div className="reg_col">
-//                 <div className="reg_line_header">
-//                   Date of birth <i className="info_icon"></i>
-//                 </div>
-//                 <div className="reg_grid">
-//                 <select className="bDay" value={bDay}    onChange={handleRegister}>
-//                     {days.map((day, i) => (
-//                       <option key={i} value={day}>
-//                         {day}
-//                       </option>
-//                     ))}
-//                   </select>
-//                   <select className="bMonth" value={bMonth}    onChange={handleRegister}>
-//                     {months.map((month, i) => (
-//                       <option key={i} value={month}>
-//                         {month}
-//                       </option>
-//                     ))}
-//                   </select>
-//                   <select className="bYear" value={bYear}    onChange={handleRegister}>
-//                     {years.map((year, i) => (
-//                       <option key={i} value={year}>
-//                         {" "}
-//                         {year}
-//                       </option>
-//                     ))}
-//                   </select>
-//                 </div>
-//               </div>
-
-//               <div className="reg_col">
-//                 <div className="reg_line_header">
-//                   Gender <i className="info_icon"></i>
-//                 </div>
-//                 <div className="reg_grid">
-//                   <label htmlFor="male">
-//                     Male{" "}
-//                     <input
-//                       type="radio"
-//                       name="gender"
-//                       id="male"
-//                       value="male"
-//                       onChange={handleRegister}
-//                     ></input>
-//                   </label>
-//                   <label htmlFor="female">
-//                     Female{" "}
-//                     <input
-//                       type="radio"
-//                       name="gender"
-//                       id="female"
-//                       value="female"
-//                       onChange={handleRegister}
-//                     ></input>
-//                   </label>
-//                 </div>
-//               </div>
-
-//               <div className="reg_infos">
-//                 By clicking Sign Up, you agree to our{" "}
-//                 <span>Terms, Data Policy &nbsp;</span>
-//                 and <span>Cookie Policy.</span> You may receive SMS
-//                 notifications from us and can opt out at any time.
-//               </div>
-//               <div className="reg_btn_wrapper">
-//                 <button className="blue_btn open_signup">Sign Ups</button>
-//               </div>
-//             </Form>
-//           )}
-//         </Formik>
-//       </div>
-//     </div>
-//   );
-// };
 export default RegisterForm;
