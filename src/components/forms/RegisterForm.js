@@ -4,7 +4,13 @@ import RegisterInput from "../inputs/registerInput";
 import * as Yup from "yup";
 import DateOfBirthSelect from "./DateOfBirthSelect";
 import GenderSelect from "./GenderSelect";
-export default function RegisterForm() {
+
+import DotLoader from "react-spinners/DotLoader";
+import { useRedux } from '../../hooks/useRedux'
+import { _register } from "../../redux/actions/auth/register";
+export default function RegisterForm({isRegister,  toggleRegister}) {
+  
+  const { dispatch, error, loading , successMsg} = useRedux()
   const userInfos = {
     first_name: "",
     last_name: "",
@@ -62,11 +68,25 @@ export default function RegisterForm() {
   });
   const [dateError, setDateError] = useState("");
   const [genderError, setGenderError] = useState("");
+
+  // submit error
+  // const [error, setError] = useState("You have an error")
+  const [sucess, setSucess ] = useState(" Sucess ")
+  // const [loading, setLoading ] = useState(true)
+
+
+  // handle the submission
+  const registerSubmit =   () => {
+   
+    dispatch(_register({...user}))
+  
+
+  }
   return (
     <div className="blur">
       <div className="register">
         <div className="register_header">
-          <i className="exit_icon"></i>
+          <i className="exit_icon" onClick={toggleRegister}></i>
           <span>Sign Up</span>
           <span>it's quick and easy</span>
         </div>
@@ -104,6 +124,7 @@ export default function RegisterForm() {
             } else {
               setDateError("");
               setGenderError("");
+              registerSubmit()
             }
           }}
         >
@@ -173,6 +194,10 @@ export default function RegisterForm() {
               <div className="reg_btn_wrapper">
                 <button className="blue_btn open_signup">Sign Up</button>
               </div>
+              <DotLoader color="#18762f" loading={loading} size={40} />
+              {/* {error.error ? } */}
+              {error &&  <div className="error_text">{ error.error }</div> }
+              {successMsg &&  <div className="sucess_text">{ successMsg }</div> }
             </Form>
           )}
         </Formik>

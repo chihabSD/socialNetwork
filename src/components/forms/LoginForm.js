@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import LoginInput from "../../components/inputs/loginInput";
 import { useState } from "react";
+import { useRedux } from "../../hooks/useRedux";
+import { _login } from "../../redux/actions/auth/login";
 const loginInfos = {
   email: "",
   password: "",
 };
-export default function LoginForm() {
+export default function LoginForm({isRegister, toggleRegister}) {
+  // hooks
+  const { dispatch, error, loading  } = useRedux()
+  // state
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
   const handleLoginChange = (e) => {
@@ -20,7 +25,12 @@ export default function LoginForm() {
       .email("Must be a valid email.")
       .max(100),
     password: Yup.string().required("Password is required"),
+
   });
+  const handleLogin = () => {
+    
+  dispatch(_login({...login}))
+  }
   return (
     <div className="login_wrap">
       <div className="login_1">
@@ -38,6 +48,10 @@ export default function LoginForm() {
               password,
             }}
             validationSchema={loginValidation}
+            onSubmit={() => {
+              
+                handleLogin()
+            }}
           >
             {(formik) => (
               <Form>
@@ -60,11 +74,12 @@ export default function LoginForm() {
               </Form>
             )}
           </Formik>
+          {error &&  <div className="error_text">{ error.error }</div> }
           <Link to="/forgot" className="forgot_password">
             Forgotten password?
           </Link>
           <div className="sign_splitter"></div>
-          <button className="blue_btn open_signup">Create Account</button>
+          <button className="blue_btn open_signup" onClick={toggleRegister}>Create Account</button>
         </div>
         <Link to="/" className="sign_extra">
           <b>Create a Page</b> for a celebrity, brand or business.

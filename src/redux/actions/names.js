@@ -1,4 +1,11 @@
 export const names = {
+  TOKEN_NAME : 'socialNetwork', 
+   // AUTH
+   LOGIN: 'login',
+   REGISTER: 'register',
+   LOGOUT: 'logout',
+   LEGACY_LOGIN: 'legacyLogin',
+   SOCIAL_LOGIN_GOOGLE: 'google',
     // DEBTS
     GET_DEBTS: 'getDebts',
     COLLECT_DEBT: 'collectDebt',
@@ -9,12 +16,7 @@ export const names = {
     CHANGE_DUE_DATE: 'changeDueDate',
     CHANGE_NOTIFICATIONS: 'changeNotification',
     UPDATE: 'update',
-    // AUTH
-    LOGIN: 'login',
-    REGISTER: 'register',
-    LOGOUT: 'logout',
-    LEGACY_LOGIN: 'legacyLogin',
-    SOCIAL_LOGIN_GOOGLE: 'google',
+   
   
     // ACCOUNT
     GET_PROFILE: 'getProfile',

@@ -7,12 +7,22 @@ const useRedux = () => {
   const {
     // loginReducer: {authenticated},
     loginReducer: { authenticated},
-  
+    errorsReducer: {error},
+    loadingReducer: {loading },
+    successMsgReducer: { successMsg}
+    
+
   } = state;
   return {
     dispatch,
     authenticated,
 
+
+    // errors
+    error, 
+  loading, 
+  //  successMsgReducer
+  successMsg
   };
 };
 
