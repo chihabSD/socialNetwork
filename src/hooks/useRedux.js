@@ -9,7 +9,8 @@ const useRedux = () => {
     loginReducer: { authenticated},
     errorsReducer: {error},
     loadingReducer: {loading },
-    successMsgReducer: { successMsg}
+    successMsgReducer: { successMsg}, 
+    profileReducer : {account}
     
 
   } = state;
@@ -22,7 +23,8 @@ const useRedux = () => {
     error, 
   loading, 
   //  successMsgReducer
-  successMsg
+  successMsg, 
+  account
   };
 };
 

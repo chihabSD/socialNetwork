@@ -19,7 +19,7 @@ export const _login = (details) => {
       dispatch(getUserProfile())
       setTimeout(() => {
         dispatch(clearLoading());
-      }, 2000);
+      }, 4000);
     } catch (e) {
         dispatch(clearSuccessMsg())
       dispatch(

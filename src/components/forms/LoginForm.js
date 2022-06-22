@@ -1,17 +1,19 @@
 import { Formik, Form } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import LoginInput from "../../components/inputs/loginInput";
 import { useState } from "react";
 import { useRedux } from "../../hooks/useRedux";
 import { _login } from "../../redux/actions/auth/login";
+import { BeatLoader } from "react-spinners";
 const loginInfos = {
   email: "",
   password: "",
 };
 export default function LoginForm({isRegister, toggleRegister}) {
   // hooks
-  const { dispatch, error, loading  } = useRedux()
+  const { dispatch, error, loading , authenticated } = useRedux()
+  const navigate = useNavigate()
   // state
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
@@ -29,7 +31,14 @@ export default function LoginForm({isRegister, toggleRegister}) {
   });
   const handleLogin = () => {
     
-  dispatch(_login({...login}))
+dispatch(_login({...login}))
+  setTimeout(() => {
+if(authenticated){
+
+  navigate('/')
+}
+
+  }, 1000)
   }
   return (
     <div className="login_wrap">
@@ -71,6 +80,11 @@ export default function LoginForm({isRegister, toggleRegister}) {
                 <button type="submit" className="blue_btn">
                   Log In
                 </button>
+                {loading ? <>
+                
+                <br />
+                <BeatLoader  color="#18762f" loading={loading} size={10}  />
+                </>: null}
               </Form>
             )}
           </Formik>
