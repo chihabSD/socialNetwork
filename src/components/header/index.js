@@ -18,16 +18,22 @@ import { useRef, useState } from "react";
 import { useRedux } from "../../hooks/useRedux";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../hooks/clickOutside";
+import UserMenu from "./userMenu/index";
 export default function Header() {
- const {account } = useRedux ()
+  const { account } = useRedux();
   const color = "#65676b";
   const [showSearchMenu, setShowSearchMenu] = useState(false);
   const [showAllMenu, setShowAllMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const allMenu = useRef(null)
+  const allMenu = useRef(null);
+  const userMenu = useRef(null);
   useClickOutside(allMenu, () => {
-    setShowAllMenu(false)
-  })
+    setShowAllMenu(false);
+  });
+  useClickOutside(userMenu, () => {
+    setShowUserMenu(false);
+  });
   return (
     <header>
       <div className="header_left">
@@ -76,17 +82,19 @@ export default function Header() {
           <img src={account?.picture} alt="" />
           <span>{account?.first_name}</span>
         </Link>
-        <div className="circle_icon hover1" onClick={() => {
-          setShowAllMenu(prev => !prev)
-        }}
-        
-        ref={allMenu}
+        <div
+          className="circle_icon hover1"
+    
+          ref={allMenu}
         >
+          <div  onClick={() => {
+            setShowAllMenu((prev) => !prev);
+          }}>
+
+     
           <Menu />
-          {showAllMenu &&
-          
-          <AllMenu />
-          }
+          </div>
+          {showAllMenu && <AllMenu />}
         </div>
         <div className="circle_icon hover1">
           <Messenger />
@@ -95,8 +103,15 @@ export default function Header() {
           <Notifications />
           <div className="right_notification">5</div>
         </div>
-        <div className="circle_icon hover1">
-          <ArrowDown />
+        <div className="circle_icon hover1" ref={userMenu}>
+          <div
+            onClick={() => {
+              setShowUserMenu((prev) => !prev);
+            }}
+          >
+            <ArrowDown />
+          </div>
+          {showUserMenu && <UserMenu account={account} />}
         </div>
       </div>
     </header>
