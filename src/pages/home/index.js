@@ -1,28 +1,14 @@
-import { useRef, useState } from "react";
-import { ref } from "yup";
+import React from 'react'
 import Header from "../../components/header";
-import useClickOutside from "../../hooks/clickOutside";
+import LeftHome from "../../components/home/left";
 import { useRedux } from "../../hooks/useRedux";
 import { _onLogout } from "../../redux/actions/auth/logout";
 
 const Home = () => {
-  const [visible, setVisible] = useState(true)
-  const el = useRef (null)
-  useClickOutside(el, () => {
-    setVisible(false)
-  })
-  // useClickOutside (el, () => {
-  //   el.current.style.display = 'none'
-  // })
-  const { dispatch,   successMsg } = useRedux()
+  const {    account } = useRedux()
   return <div>
     <Header />
-
-    {visible &&
-    
-<div className="card" ref={el}></div>
-    }
-    <div onClick={()=> dispatch(_onLogout())}> Logout </div>
+   <LeftHome user={account} />
   </div>;
 }
 export default Home
