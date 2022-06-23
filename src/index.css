@@ -54,20 +54,28 @@ a {
   cursor: pointer;
 }
 /*----Buttons----*/
-
 .blur {
   position: fixed;
   top: 0;
-  bottom: 0;
-  right: 0;
   left: 0;
+  right: 0;
   background: rgba(255, 255, 255, 0.768);
+  bottom: 0;
   z-index: 99;
 }
-/*---------- Hovers------*/
+
+/*----Buttons----*/
+
+/*-----Hovers-----*/
 .hover1:hover {
   background: var(--bg-secondary);
 }
 .hover2:hover {
   background: var(--bg-third);
+}
+/*-----Hovers-----*/
+.card {
+  height: 500px;
+  width: 500px;
+  background: red;
 }

@@ -69,11 +69,6 @@ export default function RegisterForm({isRegister,  toggleRegister}) {
   const [dateError, setDateError] = useState("");
   const [genderError, setGenderError] = useState("");
 
-  // submit error
-  // const [error, setError] = useState("You have an error")
-  const [sucess, setSucess ] = useState(" Sucess ")
-  // const [loading, setLoading ] = useState(true)
-
 
   // handle the submission
   const registerSubmit =   () => {
