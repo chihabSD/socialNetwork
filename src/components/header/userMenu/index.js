@@ -4,9 +4,12 @@ import SettingsPrivacy from "./SettingsPrivacy";
 import React from 'react'
 import HelpSupport from "./HelpSuport";
 import DisplayAccessibility from "./DisplayAccessibility";
+import { useRedux } from "../../../hooks/useRedux";
+import { _onLogout } from "../../../redux/actions/auth/logout";
 
 
 const UserMenu = ({ account }) => {
+  const {dispatch} = useRedux()
   const [visible, setVisible] = useState(0);
   return (
     <div className="mmenu">
@@ -60,7 +63,7 @@ const UserMenu = ({ account }) => {
               <i className="right_icon"></i>
             </div>
           </div>
-          <div className="mmenu_item hover3">
+          <div className="mmenu_item hover3" onClick={()=>dispatch(_onLogout())}>
             <div className="small_circle">
               <i className="logout_filled_icon"></i>
             </div>
