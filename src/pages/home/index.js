@@ -10,7 +10,7 @@ const Home = () => {
   return <div>
     <Header />
    <LeftHome user={account} />
-   <RightHome  />
+   <RightHome user={account} />
   </div>;
 }
 export default Home
