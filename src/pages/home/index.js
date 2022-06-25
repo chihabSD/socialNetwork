@@ -1,4 +1,5 @@
 import React from 'react'
+import CreatePost from '../../components/createPost';
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
 import RightHome from '../../components/home/right';
@@ -13,6 +14,7 @@ const Home = () => {
    <LeftHome user={account} />
    <div className='home_middle'>
     <Stories />
+    <CreatePost user={account} />
    </div>
    <RightHome user={account} />
   </div>;
