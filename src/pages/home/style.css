@@ -1,0 +1,9 @@
+.home {
+    min-height: 100vh;
+    background: var(--bg-secondary);
+}
+.home_middle {
+    margin-top: 58px;
+    margin-left: 31.8vw;
+
+}
