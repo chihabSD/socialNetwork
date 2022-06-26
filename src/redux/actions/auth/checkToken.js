@@ -16,7 +16,6 @@ export const checkToken = () => {
 
 
        let decodedToken = jwt_decode(token);
-  console.log("Decoded Token", decodedToken);
   let currentDate = new Date();
 
   // JWT exp is in seconds

@@ -20,6 +20,7 @@ export const names = {
   
     // ACCOUNT
     GET_PROFILE: 'getProfile',
+    SEND_VERIFICATION_TOKEN: 'sendVerificationToken',
     FORGOT_PASSWORD: 'forgotPassword',
     VERIFY_REST_TOKEN: 'verifyResetToken',
     RESET_PASSWORD: 'resetPassword',

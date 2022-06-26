@@ -22,6 +22,10 @@ const initialState = {
       },
       clearProfile: state => {
         state.account = {};
+      }, 
+      accountVerified: state => {
+        const newState = {...state.account.verified}
+        state.account.verified =  true 
       }
     },
   });
@@ -29,5 +33,6 @@ const initialState = {
   export const {
     getProfile,
   clearProfile 
+  , accountVerified
   } = profileReducer.actions;
   export default profileReducer.reducer;

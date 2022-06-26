@@ -13,6 +13,7 @@ import { clearProfile } from '../../reducers/profile';
 export const _onLogout = () => {
   return dispatch => {
     setAuthHeader(null);
+    localStorage.removeItem(names.TOKEN_NAME)
     dispatch(unauthenticate());
     dispatch(clearProfile());
     // dispatch(clearError());
