@@ -89,7 +89,7 @@ if(authenticated){
             )}
           </Formik>
           {error &&  <div className="error_text">{ error.error }</div> }
-          <Link to="/forgot" className="forgot_password">
+          <Link to="/reset" className="forgot_password">
             Forgotten password?
           </Link>
           <div className="sign_splitter"></div>
