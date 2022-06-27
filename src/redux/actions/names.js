@@ -22,6 +22,8 @@ export const names = {
     GET_PROFILE: 'getProfile',
     SEND_VERIFICATION_TOKEN: 'sendVerificationToken',
     FORGOT_PASSWORD: 'forgotPassword',
+    SEARCH_USER: 'searchUser',
+    SEND_EMAIL: 'sendEmail',
     VERIFY_REST_TOKEN: 'verifyResetToken',
     RESET_PASSWORD: 'resetPassword',
     CHANGE_CURRENT_PASSWORD: 'chagneCurrentPassword',

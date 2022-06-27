@@ -10,7 +10,7 @@ const useRedux = () => {
     errorsReducer: {error},
     loadingReducer: {loading },
     successMsgReducer: { successMsg}, 
-    profileReducer : {account}
+    profileReducer : {account, userInfo}
     
 
   } = state;
@@ -18,7 +18,8 @@ const useRedux = () => {
     dispatch,
     authenticated,
 
-
+    userInfo
+    , 
     // errors
     error, 
   loading, 

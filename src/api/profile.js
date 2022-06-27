@@ -6,6 +6,8 @@ import {names} from '../redux/actions/names';
 const {
   GET_PROFILE,
   RESEND_KEY, 
+  SEARCH_USER,
+  SEND_EMAIL,  
   SEND_VERIFICATION_TOKEN } = names;
 // handle account  api
 export const accountApiHandler = async (name, details) => {
@@ -17,6 +19,14 @@ export const accountApiHandler = async (name, details) => {
       return axios.post(`${apiBase}/user/activateAccount`, details);
       case RESEND_KEY:
         return axios.post(`${apiBase}/user/resendToken`, details);
+
+      case SEARCH_USER:
+        return axios.post(`${apiBase}/user/searchUser`, details);
+
+
+      case SEND_EMAIL:
+        return axios.post(`${apiBase}/user/sendCode`, details);
+
     default:
       break;
   }

@@ -10,12 +10,21 @@ const initialState = {
     // legacyContactAdd: false,
     resetEmail: '',
     account: {},
+    userInfo: {},
     // profile: {}
   };
    export const profileReducer = createSlice({
     name: 'profile',
     initialState,
     reducers: {
+      setUserInfo: (state, action) => {
+        // state.profile_fetching = action.payload;
+        state.userInfo = action.payload;
+      },
+      clearUserInfo: (state ) => {
+        // state.profile_fetching = action.payload;
+        state.userInfo = {} 
+      },
       getProfile: (state, action) => {
         // state.profile_fetching = action.payload;
         state.account = action.payload;
@@ -33,6 +42,6 @@ const initialState = {
   export const {
     getProfile,
   clearProfile 
-  , accountVerified
+  , accountVerified, setUserInfo, clearUserInfo
   } = profileReducer.actions;
   export default profileReducer.reducer;

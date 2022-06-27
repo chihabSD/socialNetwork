@@ -1,37 +1,69 @@
 import "./style.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-// import Cookies from "js-cookie";
-import { Form, Formik } from "formik";
-import { useState } from "react";
-import LoginInput from "../../components/inputs/loginInput";
+import { useEffect, useState } from "react";
+import SearchAccount from "./SearchAccount";
+import SendEmail from "./SendEmail";
+import CodeVerification from "./CodeVerification";
+import ChangePassword from "./ChangePassword";
+import Footer from "../../components/footer";
+import { useRedux } from "../../hooks/useRedux";
+import { clearError } from "../../redux/reducers/errors";
+// import { clearUserInfo } from "../../redux/reducers/profile";
+import { _searchUser } from "../../redux/actions/profile/searchUser";
+import { _sendEmail } from "../../redux/actions/profile/sendEmail";
 export default function Reset() {
-  const { user } = useSelector((state) => ({ ...state }));
-  const dispatch = useDispatch();
+  const { dispatch, account, error, authenticated, loading, userInfo, successMsg } =
+    useRedux();
   const navigate = useNavigate();
-  const { email, setEmail } = useState("");
-  const { error, setError } = useState("");
-  // const logout = () => {
-  //   Cookies.set("user", "");
-  //   dispatch({
-  //     type: "LOGOUT",
-  //   });
-  //   navigate("/login");
-  // };
+  const [visible, setVisible] = useState(0);
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [conf_password, setConf_password] = useState("");
+
+  const handleUserSearch = (user) => {
+    dispatch(_searchUser({ email: user }));
+  };
+  const stepThree = () => {
+    console.log(" step 3" );
+    dispatch(_sendEmail({email:userInfo.email}));
+    setVisible(2);
+  };
+  const isResetEmail = () => {
+    if (userInfo._id) {
+      setVisible(1);
+      // dispatch(clearUserInfo())
+    }
+  };
+  const handleCode = (d) => {
+    console.log("send Code");
+    console.log(d);
+    // dispatch(_sendEmail(email))
+  };
+  const logout = () => {};
+
+  useEffect(() => {
+    dispatch(clearError());
+  }, []);
+
+  useEffect(() => {
+    isResetEmail();
+  }, [userInfo]);
+
   return (
     <div className="reset">
       <div className="reset_header">
         <img src="../../../icons/facebook.svg" alt="" />
-        {user ? (
+        {authenticated ? (
           <div className="right_reset">
             <Link to="/profile">
-              <img src={user.picture} alt="" />
+              <img src={account.picture} alt="" />
             </Link>
             <button
               className="blue_btn"
-              // onClick={() => {
-              //   logout();
-              // }}
+              onClick={() => {
+                logout();
+              }}
             >
               Logout
             </button>
@@ -42,41 +74,40 @@ export default function Reset() {
           </Link>
         )}
       </div>
+
       <div className="reset_wrap">
-        <div className="reset_form">
-          <div className="reset_form_header">Find Your Account</div>
-          <div className="reset_form_text">
-            Please enter your email address or mobile number to search for your
-            account.
-          </div>
-          <Formik
-            enableReinitialize
-            initialValues={{
-              email,
-            }}
-          >
-            {(formik) => (
-              <Form>
-                <LoginInput
-                  type="text"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email address or phone number"
-                />
-                {error && <div className="error_text">{error}</div>}
-                <div className="reset_form_btns">
-                  <Link to="/login" className="gray_btn">
-                    Cancel
-                  </Link>
-                  <button type="submit" className="blue_btn">
-                    Search
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
+        {visible === 0 && (
+          <SearchAccount
+            loading={loading}
+            email={email}
+            setEmail={setEmail}
+            error={error}
+            handleUserSearch={handleUserSearch}
+          />
+        )}
+        {visible === 1 && (
+          <SendEmail account={userInfo} user={userInfo} stepThree={stepThree} />
+        )}
+        {visible === 2 && (
+          <CodeVerification
+            user={account}
+            code={code}
+            handleCode={handleCode}
+            setCode={setCode}
+            error={error}
+            successMsg={successMsg}
+          />
+        )}
+        {visible === 3 && (
+          <ChangePassword
+            password={password}
+            conf_password={conf_password}
+            setConf_password={setConf_password}
+            setPassword={setPassword}
+          />
+        )}
       </div>
+      <Footer />
     </div>
   );
 }
