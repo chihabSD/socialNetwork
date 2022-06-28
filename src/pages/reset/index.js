@@ -54,7 +54,6 @@ export default function Reset() {
     }
   }
   const handlePasswordChange = () => {
-    console.log('chagne password is ');
     dispatch(_changePassword({email: userInfo.email, password}))
   }
   const passwordIsChanged = () => {
