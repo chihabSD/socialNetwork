@@ -24,6 +24,7 @@ export const names = {
     FORGOT_PASSWORD: 'forgotPassword',
     SEARCH_USER: 'searchUser',
     SEND_EMAIL: 'sendEmail',
+    VERIFY_TOKEN: 'verifyToken',
     VERIFY_REST_TOKEN: 'verifyResetToken',
     RESET_PASSWORD: 'resetPassword',
     CHANGE_CURRENT_PASSWORD: 'chagneCurrentPassword',

@@ -8,6 +8,8 @@ const {
   RESEND_KEY, 
   SEARCH_USER,
   SEND_EMAIL,  
+  VERIFY_TOKEN, 
+  RESET_PASSWORD, 
   SEND_VERIFICATION_TOKEN } = names;
 // handle account  api
 export const accountApiHandler = async (name, details) => {
@@ -23,9 +25,14 @@ export const accountApiHandler = async (name, details) => {
       case SEARCH_USER:
         return axios.post(`${apiBase}/user/searchUser`, details);
 
-
       case SEND_EMAIL:
         return axios.post(`${apiBase}/user/sendCode`, details);
+
+        case VERIFY_TOKEN:
+          return axios.post(`${apiBase}/user/verifyCode`, details);
+
+        case RESET_PASSWORD:
+          return axios.post(`${apiBase}/user/changePassword`, details);
 
     default:
       break;

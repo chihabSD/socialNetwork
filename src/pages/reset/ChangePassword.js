@@ -9,6 +9,7 @@ export default function ChangePassword({
   conf_password,
   setConf_password,
   error,
+  handlePasswordChange
 }) {
   const validatePassword = Yup.object({
     password: Yup.string()
@@ -33,6 +34,7 @@ export default function ChangePassword({
           conf_password,
         }}
         validationSchema={validatePassword}
+        onSubmit = {() => setPassword(password)}
       >
         {(formik) => (
           <Form>
@@ -54,7 +56,7 @@ export default function ChangePassword({
               <Link to="/login" className="gray_btn">
                 Cancel
               </Link>
-              <button type="submit" className="blue_btn">
+              <button onClick={()=>  handlePasswordChange()} type="submit" className="blue_btn">
                 Continue
               </button>
             </div>

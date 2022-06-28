@@ -11,8 +11,12 @@ import { clearError } from "../../redux/reducers/errors";
 // import { clearUserInfo } from "../../redux/reducers/profile";
 import { _searchUser } from "../../redux/actions/profile/searchUser";
 import { _sendEmail } from "../../redux/actions/profile/sendEmail";
+import { _verifyCode } from "../../redux/actions/profile/verifyCode";
+import { clearSuccessMsg } from "../../redux/reducers/sucess";
+import { clearPasswordChanged } from "../../redux/reducers/profile";
+import { _changePassword } from "../../redux/actions/profile/changePassword";
 export default function Reset() {
-  const { dispatch, account, error, authenticated, loading, userInfo, successMsg } =
+  const { dispatch, account, error, authenticated, loading, userInfo, successMsg, codeVerified, passwordChanged } =
     useRedux();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(0);
@@ -35,20 +39,45 @@ export default function Reset() {
       // dispatch(clearUserInfo())
     }
   };
-  const handleCode = (d) => {
-    console.log("send Code");
-    console.log(d);
-    // dispatch(_sendEmail(email))
+  const handleCode = () => {
+    console.log(code);
+
+    dispatch(_verifyCode({email:userInfo.email, code}))
+    dispatch(clearSuccessMsg())
   };
   const logout = () => {};
 
+  const isCodeVerified = () => {
+    if(codeVerified){
+      setVisible(3)
+      // console.log(' code verifed');
+    }
+  }
+  const handlePasswordChange = () => {
+    console.log('chagne password is ');
+    dispatch(_changePassword({email: userInfo.email, password}))
+  }
+  const passwordIsChanged = () => {
+    if(passwordChanged) {
+      navigate('/login')
+      dispatch(clearPasswordChanged())
+    }
+  }
   useEffect(() => {
     dispatch(clearError());
   }, []);
 
   useEffect(() => {
     isResetEmail();
+  
   }, [userInfo]);
+  useEffect(() => {
+    isCodeVerified();
+  }, [codeVerified]);
+
+  useEffect(() => {
+    passwordIsChanged();
+  }, [passwordChanged]);
 
   return (
     <div className="reset">
@@ -104,6 +133,7 @@ export default function Reset() {
             conf_password={conf_password}
             setConf_password={setConf_password}
             setPassword={setPassword}
+            handlePasswordChange={handlePasswordChange}
           />
         )}
       </div>

@@ -3,13 +3,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginInput from "../../components/inputs/loginInput";
 import * as Yup from "yup";
-export default function CodeVerification({ code, setCode, error, handleCode, successMsg, sendCode}) {
+export default function CodeVerification({ code, setCode, error,  successMsg, handleCode}) {
   const validateCode = Yup.object({
     code: Yup.string()
       .required("Code is required")
       .min("5", "Code must be 5 characters.")
       .max("5", "Code must be 5 characters."),
   });
+  
   return (
     <div className="reset_form">
       <div className="reset_form_header">Code verification</div>
@@ -26,7 +27,8 @@ export default function CodeVerification({ code, setCode, error, handleCode, suc
       onSubmit={() => {
               
         // handleEmailCheck(email)
-        handleCode(code)
+        // handleCode(code)
+        setCode(code)
     }}
       >
         {(formik) => (
@@ -45,7 +47,8 @@ export default function CodeVerification({ code, setCode, error, handleCode, suc
               </Link>
               
               {/* <button type="submit" className="blue_btn" onClick={() => stepThree()}> */}
-              <button onClick={() => sendCode()} className="blue_btn">
+              {/* <button onClick={() => sendCode(code)} className="blue_btn"> */}
+              <button onClick={()=> handleCode()}  className="blue_btn" type="button">
                 Continue
               </button>
 
