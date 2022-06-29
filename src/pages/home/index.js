@@ -8,7 +8,7 @@ import Stories from "../../components/home/stories";
 import { useRedux } from "../../hooks/useRedux";
 import { _onLogout } from "../../redux/actions/auth/logout";
 import "./style.css";
-const Home = () => {
+const Home = ({togglePopup}) => {
   const { account } = useRedux();
   return (
     <div className="home">
@@ -17,7 +17,7 @@ const Home = () => {
       <div className="home_middle">
         <Stories />
         {!account.verified && <SendVerification user={account} />}
-        <CreatePost user={account} />
+        <CreatePost user={account} togglePopup={togglePopup}/>
       </div>
       <RightHome user={account} />
     </div>
