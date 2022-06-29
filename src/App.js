@@ -6,10 +6,14 @@ import LoggedInRoute from "./routes/LoggedInRoute";
 import NotLoggedInRoute from "./routes/NotLoggedInRoute";
 import Activate from "./pages/home/activate";
 import Reset from "./pages/reset";
+import { useRedux } from "./hooks/useRedux";
+import CreatePostPopup from "./components/createPostPopup";
 
 function App() {
+  const {account} = useRedux()
   return (
     <div>
+       <CreatePostPopup user={account} />
       <Routes>
         <Route element={<LoggedInRoute />}>
           <Route path="/profile" element={<Profile />} exact />
