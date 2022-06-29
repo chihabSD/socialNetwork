@@ -5,15 +5,26 @@ import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import AddToYourPost from "./AddToYourPost";
 import ImagePreview from "./ImagePreview";
 import useClickOutside from "../../hooks/clickOutside";
+import { useRedux } from "../../hooks/useRedux";
+import { _createPost } from "../../redux/actions/post/createPost";
+import { PulseLoader } from "react-spinners";
 export default function CreatePostPopup({ user, togglePopup }) {
+  const {dispatch, loading} = useRedux()
   const [text, setText] = useState("");
-  const [showPrev, setShowPrev] = useState(true);
+  const [showPrev, setShowPrev] = useState(false);
   const [images, setImages] = useState([]);
   const [background, setBackground] = useState("");
   const popRef = useRef(null)
   useClickOutside(popRef, () => {
     togglePopup()
   })
+
+  // Submit the post 
+  const submitPost = () => {
+    if(background){
+      dispatch(_createPost({background, text}))
+    }
+  }
   return (
     <div className="blur">
       <div className="postBox" ref={popRef}>
@@ -60,7 +71,7 @@ export default function CreatePostPopup({ user, togglePopup }) {
           />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
-        <button className="post_submit">Post</button>
+        <button className="post_submit" disabled={loading} onClick={()=> submitPost()}>{loading ? <PulseLoader color="#fff" size={5} /> :'Post' } </button>
       </div>
     </div>
   );

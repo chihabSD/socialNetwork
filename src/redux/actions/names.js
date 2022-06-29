@@ -32,8 +32,8 @@ export const names = {
     DELETE_GOOGLE: 'deleteGoogle',
     DELETE_LOCAL: 'deleteLocal',
   
-    //  NOTIFICATIONS
-    GET_NOTIFICATIONS: 'getNotifications',
+    // POST 
+    CREATE_POST: 'createPost',
     GET_INITIAL_NOTIFICATIONS: 'getInitialNotifications',
     DELETE_NOTIFICATIONS: 'deleteNotifications',
   
