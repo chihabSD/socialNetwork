@@ -1,6 +1,7 @@
 import { useRef } from "react";
+import { useRedux } from "../../hooks/useRedux";
+import { setError } from "../../redux/reducers/errors";
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
-
 export default function ImagePreview({
   text,
   user,
@@ -8,16 +9,41 @@ export default function ImagePreview({
   images,
   setImages,
   setShowPrev,
+  // setError,
 }) {
+  const {dispatch} = useRedux()
   const imageInputRef = useRef(null);
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
     files.forEach((img) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(img);
-      reader.onload = (readerEvent) => {
-        setImages((images) => [...images, readerEvent.target.result]);
-      };
+      console.log(img);
+      if (
+        img.type !== "image/jpeg" &&
+        img.type !== "image/png" &&
+        img.type !== "image/webp" &&
+        img.type !== "image/gif"
+      ) {
+        
+        dispatch(
+
+        setError(
+
+          `${img.name} format is unsupported ! only Jpeg, Png, Webp, Gif are allowed.`
+        )
+        );
+        files = files.filter((item) => item.name !== img.name);
+        return;
+      } else if (img.size > 1024 * 1024) {
+        setError(`${img.name} size is too large max 5mb allowed.`);
+        files = files.filter((item) => item.name !== img.name);
+        return;
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(img);
+        reader.onload = (readerEvent) => {
+          setImages((images) => [...images, readerEvent.target.result]);
+        };
+      }
     });
   };
   return (
@@ -26,6 +52,7 @@ export default function ImagePreview({
       <div className="add_pics_wrap">
         <input
           type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
           multiple
           hidden
           ref={imageInputRef}

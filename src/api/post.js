@@ -3,11 +3,15 @@ import { apiBase, localhost } from "../helpers/apiUrl";
 
 import { names } from "../redux/actions/names";
 
-const { CREATE_POST } = names;
+const { CREATE_POST, UPLOAD_IMAGES } = names;
 
 // handle auth
 export const postApiHandler = async (name, details) => {
   switch (name) {
+    case UPLOAD_IMAGES:
+      return axios.post(`${apiBase}/user/upload/uploadImages`, details, {
+        headers: { "content-type": "multipart/form" },
+      });
     case CREATE_POST:
       return axios.post(`${apiBase}/user/post/createPost`, details);
     default:

@@ -37,6 +37,8 @@ export const names = {
     GET_INITIAL_NOTIFICATIONS: 'getInitialNotifications',
     DELETE_NOTIFICATIONS: 'deleteNotifications',
   
+    // IMAGES
+    UPLOAD_IMAGES : 'uploadImage', 
     // USERS
     GET_USERS: 'getUsers',
     SEND_IVITATION_EMAIL: 'SendInvitationEmail',

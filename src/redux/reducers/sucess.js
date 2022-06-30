@@ -1,8 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
+  
   successMsg: null,
 };
 export const successMsgReducer = createSlice({
+
   name: 'sucessMsg',
   initialState,
   reducers: {

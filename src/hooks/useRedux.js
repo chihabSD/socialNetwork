@@ -10,6 +10,8 @@ const useRedux = () => {
     errorsReducer: {error},
     loadingReducer: {loading },
     successMsgReducer: { successMsg}, 
+    actionReducer: { action}, 
+    postReducer: { postCreated }, 
     profileReducer : {account, userInfo, codeVerified, passwordChanged}
     
 
@@ -25,7 +27,7 @@ const useRedux = () => {
   loading, 
   //  successMsgReducer
   successMsg, 
-  account, codeVerified, passwordChanged
+  account, codeVerified, passwordChanged, postCreated, action
   };
 };
 
