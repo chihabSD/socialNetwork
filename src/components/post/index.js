@@ -10,7 +10,7 @@ export default function Post({ post, user }) {
           to={`/profile/${post.user.username}`}
           className="post_header_left"
         >
-          <img src={user?.picture} alt="" />
+          <img src={user.picture} alt="" />
           <div className="header_col">
             <div className="post_profile_name">
               {post.user.first_name} {post.user.last_name}
@@ -29,7 +29,7 @@ export default function Post({ post, user }) {
               <Moment fromNow interval={30}>
                 {post.createdAt}
               </Moment>
-               <Public color="#828387" />
+              . <Public color="#828387" />
             </div>
           </div>
         </Link>

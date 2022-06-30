@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import CreatePost from "../../components/createPost";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
@@ -13,22 +13,34 @@ import "./style.css";
 const Home = ({togglePopup}) => {
   const { account, dispatch, posts, loading  } = useRedux();
 
+
+  const middle = useRef(null);
+  const [height, setHeight] = useState();
+  useEffect(() => {
+    // setHeight(middle.current.clientHeight);
+  }, []);
+
+
   useEffect(() => {
 
     dispatch(_getAllPosts())
     }, [])
   return (
-    <div className="home">
+          <div className="home" style={{ height: `${height + 150}px` }}>
       <Header />
       <LeftHome user={account} />
       <div className="home_middle">
+        
         <Stories />
         {!account.verified && <SendVerification user={account} />}
         <CreatePost user={account} togglePopup={togglePopup}/>
         <div className="posts">
-          {posts.map((post) => (
+          {loading ? <div> Loading </div> :
+          
+          posts.map((post) => (
             <Post key={post._id} post={post} user={account}/>
-          ))}
+          ))
+          }
         </div>
       </div>
       <RightHome user={account} />
