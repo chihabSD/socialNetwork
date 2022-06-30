@@ -8,12 +8,18 @@ import Activate from "./pages/home/activate";
 import Reset from "./pages/reset";
 import { useRedux } from "./hooks/useRedux";
 import CreatePostPopup from "./components/createPostPopup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { _getAllPosts } from "./redux/actions/post/getAllPosts";
 
 function App() {
-  const {account} = useRedux()
+  const {account, posts, loading, error, dispatch} = useRedux()
   const [showPopUp, setShowPop] = useState(false)
   const togglePopup = () => setShowPop(prev => !prev)
+
+  useEffect(() => {
+
+  dispatch(_getAllPosts())
+  }, [])
   return (
     <div>
       {showPopUp &&

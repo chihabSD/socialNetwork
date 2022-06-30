@@ -3,7 +3,7 @@ import { apiBase, localhost } from "../helpers/apiUrl";
 
 import { names } from "../redux/actions/names";
 
-const { CREATE_POST, UPLOAD_IMAGES } = names;
+const { CREATE_POST, UPLOAD_IMAGES, GET_ALL_POSTS } = names;
 
 // handle auth
 export const postApiHandler = async (name, details) => {
@@ -14,6 +14,8 @@ export const postApiHandler = async (name, details) => {
       });
     case CREATE_POST:
       return axios.post(`${apiBase}/user/post/createPost`, details);
+    case GET_ALL_POSTS:
+      return axios.get(`${apiBase}/user/post/getAllPosts` );
     default:
       break;
   }

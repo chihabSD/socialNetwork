@@ -34,6 +34,7 @@ export const names = {
   
     // POST 
     CREATE_POST: 'createPost',
+    GET_ALL_POSTS: 'getAllPosts',
     GET_INITIAL_NOTIFICATIONS: 'getInitialNotifications',
     DELETE_NOTIFICATIONS: 'deleteNotifications',
   
