@@ -15,7 +15,7 @@ const {
 export const accountApiHandler = async (name, details) => {
   switch (name) {
     case GET_PROFILE:
-      return axios.get(`${apiBase}/user/profile`);
+      return axios.get(`${apiBase}/user/profile/${details}`);
 
     case SEND_VERIFICATION_TOKEN:
       return axios.post(`${apiBase}/user/activateAccount`, details);

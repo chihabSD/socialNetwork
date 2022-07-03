@@ -27,7 +27,7 @@ const Home = ({togglePopup}) => {
     }, [])
   return (
           <div className="home" style={{ height: `${height + 150}px` }}>
-      <Header />
+      <Header page="home"/>
       <LeftHome user={account} />
       <div className="home_middle">
         
@@ -35,12 +35,12 @@ const Home = ({togglePopup}) => {
         {!account.verified && <SendVerification user={account} />}
         <CreatePost user={account} togglePopup={togglePopup}/>
         <div className="posts">
-          {loading ? <div> Loading </div> :
+          {/* {loading ? <div> Loading </div> :
           
           posts.map((post) => (
             <Post key={post._id} post={post} user={account}/>
           ))
-          }
+          } */}
         </div>
       </div>
       <RightHome user={account} />

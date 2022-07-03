@@ -8,6 +8,7 @@ const initialState = {
   // legacyContactAdd: false,
   resetEmail: "",
   account: {},
+  currentUserPosts: {},
   userInfo: {},
   // profile: {}
 };
@@ -36,9 +37,14 @@ export const profileReducer = createSlice({
       // state.profile_fetching = action.payload;
       state.userInfo = action.payload;
     },
+    setCurrentUserPosts: (state, action) => {
+      // state.profile_fetching = action.payload;
+      state.currentUserPosts = action.payload;
+    },
     clearUserInfo: (state) => {
       // state.profile_fetching = action.payload;
       state.userInfo = {};
+      state.currentUserPosts = {};
     },
     getProfile: (state, action) => {
       // state.profile_fetching = action.payload;
@@ -64,5 +70,6 @@ export const {
   clearUserInfo,
   setPasswordChanged,
   clearPasswordChanged,
+  setCurrentUserPosts
 } = profileReducer.actions;
 export default profileReducer.reducer;

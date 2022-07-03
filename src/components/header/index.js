@@ -4,6 +4,7 @@ import {
   ArrowDown,
   Friends,
   Gaming,
+  Home,
   HomeActive,
   Logo,
   Market,
@@ -19,7 +20,8 @@ import { useRedux } from "../../hooks/useRedux";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../hooks/clickOutside";
 import UserMenu from "./userMenu/index";
-export default function Header() {
+// import Home from "../../pages/home";
+export default function Header({page}) {
   const { account } = useRedux();
   const color = "#65676b";
   const [showSearchMenu, setShowSearchMenu] = useState(false);
@@ -60,8 +62,12 @@ export default function Header() {
         <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} />
       )}
       <div className="header_middle">
-        <Link to="/" className="middle_icon active">
-          <HomeActive />
+        <Link to="/" className={`middle_icon active ${page==='home' ? 'active':""}`}>
+          {page === 'home' ? 
+          
+          <HomeActive />:
+          <Home color={color} />
+        }
         </Link>
         <Link to="/" className="middle_icon hover1">
           <Friends color={color} />
@@ -78,7 +84,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="header_right">
-        <Link to="/profile" className="profile_link hover1">
+        <Link to="/profile" className={`profile_link hover1 ${page==='profile'? 'active_link':''}`}>
           <img src={account?.picture} alt="" />
           <span>{account?.first_name}</span>
         </Link>

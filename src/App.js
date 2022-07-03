@@ -16,10 +16,7 @@ function App() {
   const [showPopUp, setShowPop] = useState(false)
   const togglePopup = () => setShowPop(prev => !prev)
 
-  useEffect(() => {
 
-  dispatch(_getAllPosts())
-  }, [])
   return (
     <div>
       {showPopUp &&
@@ -28,7 +25,8 @@ function App() {
       }
       <Routes>
         <Route element={<LoggedInRoute />}>
-          <Route path="/profile" element={<Profile />} exact />
+          <Route path="/profile" element={<Profile togglePopup={togglePopup} />} exact />
+          <Route path="/profile/:username" element={<Profile  togglePopup={togglePopup}/>} exact />
           <Route path="/" element={<Home togglePopup={togglePopup}/>} exact />
           <Route path="/activate/:token" element={<Activate />} exact />
         </Route>
