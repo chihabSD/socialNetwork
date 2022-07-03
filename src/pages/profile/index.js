@@ -35,7 +35,6 @@ useEffect(() => {
   }
 },[action])
   const visitor = userName === account.username ? false :true 
-  console.log(visitor);
   return (
     <div className="profile">
       <Header page="profile" />
@@ -53,10 +52,8 @@ useEffect(() => {
             <div className="profile_grid">
               <div className="profile_left"></div>
               <div className="profile_right">
-                  {/* <CreatePost user={account} profile togglePopup={() =>togglePopup()} /> */}
                 {!visitor && (
-                  // <CreatePost user={account} profile togg} />
-                  <CreatePost user={account} profile togglePopup={() =>togglePopup()} />
+                  <CreatePost user={account} profile togglePopup={()=>togglePopup()} />
                 )}
                 <GridPosts />
                 <div className="posts">

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/clickOutside";
+
 export default function Cover({ cover, visitor }) {
   const [showCoverMneu, setShowCoverMenu] = useState(false);
   const menuRef = useRef(null);
