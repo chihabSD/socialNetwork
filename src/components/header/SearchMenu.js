@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import useClickOutside from "../../hooks/clickOutside";
 import { Return, Search } from "../../svg";
+import useClickOutside from "../../helpers/clickOutside";
 export default function SearchMenu({ color, setShowSearchMenu }) {
   const [iconVisible, setIconVisible] = useState(true);
   const menu = useRef(null);
-  
-  // focus input
   const input = useRef(null);
   useClickOutside(menu, () => {
     setShowSearchMenu(false);

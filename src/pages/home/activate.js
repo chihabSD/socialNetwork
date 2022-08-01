@@ -1,47 +1,62 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatePost from "../../components/createPost";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
 import RightHome from "../../components/home/right";
 import Stories from "../../components/home/stories";
-import { useRedux } from "../../hooks/useRedux";
-import { _activateAccount } from "../../redux/actions/profile/activateAccount";
 import ActivateForm from "./ActivateForm";
 import "./style.css";
-const Activate = () => {
-  const { account, loading, successMsg, error, dispatch } = useRedux();
-  const { token } = useParams();
-
+import axios from "axios";
+import Cookies from "js-cookie";
+export default function Activate() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { user } = useSelector((user) => ({ ...user }));
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const { token } = useParams();
   useEffect(() => {
-    if (account.verified) {
-      verified();
-    } else {
-      NotVerified();
+    activateAccount();
+  }, []);
+  const activateAccount = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/activate`,
+        { token },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      setSuccess(data.message);
+      Cookies.set("user", JSON.stringify({ ...user, verified: true }));
+      dispatch({
+        type: "VERIFY",
+        payload: true,
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      setError(error.response.data.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
-    // handleActivation()
-  }, [account.verified]);
-  const verified = () => {
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
   };
-  const NotVerified = () => {
-    dispatch(_activateAccount({ token }));
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
-  };
-  
   return (
     <div className="home">
-      {successMsg && (
+      {success && (
         <ActivateForm
           type="success"
           header="Account verification succeded."
-          text={successMsg}
+          text={success}
           loading={loading}
         />
       )}
@@ -54,14 +69,12 @@ const Activate = () => {
         />
       )}
       <Header />
-      <LeftHome user={account} />
+      <LeftHome user={user} />
       <div className="home_middle">
         <Stories />
-        <CreatePost user={account} />
+        <CreatePost user={user} />
       </div>
-      <RightHome user={account} />
+      <RightHome user={user} />
     </div>
   );
-};
-
-export default Activate;
+}

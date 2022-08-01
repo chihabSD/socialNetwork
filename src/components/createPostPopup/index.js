@@ -4,66 +4,107 @@ import Picker from "emoji-picker-react";
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import AddToYourPost from "./AddToYourPost";
 import ImagePreview from "./ImagePreview";
-import useClickOutside from "../../hooks/clickOutside";
-import { useRedux } from "../../hooks/useRedux";
-import { _createPost } from "../../redux/actions/post/createPost";
-import { PulseLoader } from "react-spinners";
-import ErrorPopup from "../errorPopup";
+import useClickOutside from "../../helpers/clickOutside";
+import { createPost } from "../../functions/post";
+import PulseLoader from "react-spinners/PulseLoader";
+import { useDispatch } from "react-redux";
 import PostError from "./PostError";
-import { clearActionMessage } from "../../redux/reducers/action";
 import dataURItoBlob from "../../helpers/dataURItoBlob";
-import { uploadImages } from "../../helpers/uploadImages";
-export default function CreatePostPopup({ user, togglePopup }) {
-  const { dispatch, loading, error, action } = useRedux();
+import { uploadImages } from "../../functions/uploadImages";
+export default function CreatePostPopup({ user, setVisible }) {
+  const dispatch = useDispatch();
+  const popup = useRef(null);
   const [text, setText] = useState("");
   const [showPrev, setShowPrev] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [images, setImages] = useState([]);
   const [background, setBackground] = useState("");
-  const popRef = useRef(null);
-  useClickOutside(popRef, () => {
-    togglePopup();
+  useClickOutside(popup, () => {
+    setVisible(false);
   });
-
-  // Submit the post
-  const submitPost = () => {
+  const postSubmit = async () => {
     if (background) {
-      dispatch(_createPost(null,  { background, text }));
+      setLoading(true);
+      const response = await createPost(
+        null,
+        background,
+        text,
+        null,
+        user.id,
+        user.token
+      );
+      setLoading(false);
+      if (response === "ok") {
+        setBackground("");
+        setText("");
+        setVisible(false);
+      } else {
+        setError(response);
+      }
     } else if (images && images.length) {
+      setLoading(true);
       const postImages = images.map((img) => {
         return dataURItoBlob(img);
       });
-      console.log(postImages);
       const path = `${user.username}/post_images`;
       let formData = new FormData();
       formData.append("path", path);
       postImages.forEach((image) => {
         formData.append("file", image);
       });
+      const response = await uploadImages(formData, path, user.token);
 
-      // const response = await uploadImages(formData, )
-      // const data = { formData, text}
-      dispatch(_createPost(formData, {text} ));
+      const res = await createPost(
+        null,
+        null,
+        text,
+        response,
+        user.id,
+        user.token
+      );
+      setLoading(false);
+      if (res === "ok") {
+        setText("");
+        setImages("");
+        setVisible(false);
+      } else {
+        setError(res);
+      }
+    } else if (text) {
+      setLoading(true);
+      const response = await createPost(
+        null,
+        null,
+        text,
+        null,
+        user.id,
+        user.token
+      );
+      setLoading(false);
+      if (response === "ok") {
+        setBackground("");
+        setText("");
+        setVisible(false);
+      } else {
+        setError(response);
+      }
     } else {
-      return null;
+      console.log("nothing");
     }
   };
-
-  useEffect(() => {
-    if (action.message) {
-      setTimeout(() => {
-        togglePopup();
-        dispatch(clearActionMessage());
-      }, 4000);
-    }
-  }, [action]);
   return (
     <div className="blur">
-      <div className="postBox" ref={popRef}>
-        {/* <ErrorPopup /> */}
-        {error && <PostError error={error} />}
+      <div className="postBox" ref={popup}>
+        {error && <PostError error={error} setError={setError} />}
         <div className="box_header">
-          <div className="small_circle">
-            <i className="exit_icon" onClick={() => togglePopup()}></i>
+          <div
+            className="small_circle"
+            onClick={() => {
+              setVisible(false);
+            }}
+          >
+            <i className="exit_icon"></i>
           </div>
           <span>Create Post</span>
         </div>
@@ -101,15 +142,18 @@ export default function CreatePostPopup({ user, togglePopup }) {
             images={images}
             setImages={setImages}
             setShowPrev={setShowPrev}
+            setError={setError}
           />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
         <button
           className="post_submit"
-          // disabled={loading}
-          onClick={() => submitPost()}
+          onClick={() => {
+            postSubmit();
+          }}
+          disabled={loading}
         >
-          {loading ? <PulseLoader color="#fff" size={5} /> : "Post"}{" "}
+          {loading ? <PulseLoader color="#fff" size={5} /> : "Post"}
         </button>
       </div>
     </div>

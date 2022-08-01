@@ -1,25 +1,20 @@
-import React from 'react';
-
+import React from "react";
+import ReactDOM from "react-dom";
 import "./index.css";
 import "./styles/icons/icons.css";
+import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./reducers";
+const store = createStore(rootReducer, composeWithDevTools());
 
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom';
-
-  import { Provider } from 'react-redux';
-import store from './redux/store';
-import { checkToken } from './redux/actions/auth/checkToken';
-
-store.dispatch(checkToken())
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <Provider store={store}>
-
-  <Router>
-    <App />
-  </Router>
-  </Provider>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("root")
 );
-
-

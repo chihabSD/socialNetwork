@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import CreatePost from "../../components/createPost";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
@@ -6,45 +7,29 @@ import RightHome from "../../components/home/right";
 import SendVerification from "../../components/home/sendVerification";
 import Stories from "../../components/home/stories";
 import Post from "../../components/post";
-import { useRedux } from "../../hooks/useRedux";
-import { _onLogout } from "../../redux/actions/auth/logout";
-import { _getAllPosts } from "../../redux/actions/post/getAllPosts";
 import "./style.css";
-const Home = ({togglePopup}) => {
-  const { account, dispatch, posts, loading  } = useRedux();
-
-
+export default function Home({ setVisible, posts }) {
+  const { user } = useSelector((state) => ({ ...state }));
   const middle = useRef(null);
   const [height, setHeight] = useState();
   useEffect(() => {
-    // setHeight(middle.current.clientHeight);
+    setHeight(middle.current.clientHeight);
   }, []);
-
-
-  useEffect(() => {
-
-    dispatch(_getAllPosts())
-    }, [])
   return (
-          <div className="home" style={{ height: `${height + 150}px` }}>
-      <Header page="home"/>
-      <LeftHome user={account} />
-      <div className="home_middle">
-        
+    <div className="home" style={{ height: `${height + 150}px` }}>
+      <Header page="home" />
+      <LeftHome user={user} />
+      <div className="home_middle" ref={middle}>
         <Stories />
-        {!account.verified && <SendVerification user={account} />}
-        <CreatePost user={account} togglePopup={togglePopup}/>
+        {user.verified === false && <SendVerification user={user} />}
+        <CreatePost user={user} setVisible={setVisible} />
         <div className="posts">
-          {/* {loading ? <div> Loading </div> :
-          
-          posts.map((post) => (
-            <Post key={post._id} post={post} user={account}/>
-          ))
-          } */}
+          {posts.map((post) => (
+            <Post key={post._id} post={post} user={user} />
+          ))}
         </div>
       </div>
-      <RightHome user={account} />
+      <RightHome user={user} />
     </div>
   );
-};
-export default Home;
+}

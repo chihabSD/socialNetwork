@@ -1,7 +1,7 @@
 import { Feeling, LiveVideo, Photo } from "../../svg";
 import UserMenu from "../header/userMenu";
 import "./style.css";
-export default function CreatePost({ user, togglePopup, profile }) {
+export default function CreatePost({ user, setVisible, profile }) {
   return (
     <div className="createPost">
       <div className="createPost_header">
@@ -9,7 +9,7 @@ export default function CreatePost({ user, togglePopup, profile }) {
         <div
           className="open_post hover2"
           onClick={() => {
-          togglePopup()
+            setVisible(true);
           }}
         >
           What's on your mind, {user?.first_name}

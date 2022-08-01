@@ -1,7 +1,6 @@
 import { useRef } from "react";
-import { useRedux } from "../../hooks/useRedux";
-import { setError } from "../../redux/reducers/errors";
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
+
 export default function ImagePreview({
   text,
   user,
@@ -9,9 +8,8 @@ export default function ImagePreview({
   images,
   setImages,
   setShowPrev,
-  // setError,
+  setError,
 }) {
-  const {dispatch} = useRedux()
   const imageInputRef = useRef(null);
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
@@ -23,17 +21,12 @@ export default function ImagePreview({
         img.type !== "image/webp" &&
         img.type !== "image/gif"
       ) {
-        
-        dispatch(
-
         setError(
-
           `${img.name} format is unsupported ! only Jpeg, Png, Webp, Gif are allowed.`
-        )
         );
         files = files.filter((item) => item.name !== img.name);
         return;
-      } else if (img.size > 1024 * 1024) {
+      } else if (img.size > 1024 * 1024 * 5) {
         setError(`${img.name} size is too large max 5mb allowed.`);
         files = files.filter((item) => item.name !== img.name);
         return;

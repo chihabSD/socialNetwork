@@ -2,20 +2,40 @@ import { Form, Formik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginInput from "../../components/inputs/loginInput";
-
-import { BeatLoader } from "react-spinners";
 import * as Yup from "yup";
-export default function SearchAccount({ email, setEmail, error, loading,  handleUserSearch }) {
+import axios from "axios";
+export default function SearchAccount({
+  email,
+  setEmail,
+  error,
+  setError,
+  setLoading,
+  setUserInfos,
+  setVisible,
+}) {
   const validateEmail = Yup.object({
     email: Yup.string()
       .required("Email address ir required.")
       .email("Must be a valid email address.")
       .max(50, "Email address can't be more than 50 characters."),
   });
-  const handleEmailCheck = (email) => {
+  const handleSearch = async () => {
+    try {
+      setLoading(true);
 
-    console.log(email);
-  }
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/findUser`,
+        { email }
+      );
+      setUserInfos(data);
+      setVisible(1);
+      setError("");
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
   return (
     <div className="reset_form">
       <div className="reset_form_header">Find Your Account</div>
@@ -30,10 +50,8 @@ export default function SearchAccount({ email, setEmail, error, loading,  handle
         }}
         validationSchema={validateEmail}
         onSubmit={() => {
-              
-          // handleEmailCheck(email)
-          handleUserSearch(email)
-      }}
+          handleSearch();
+        }}
       >
         {(formik) => (
           <Form>
@@ -43,11 +61,6 @@ export default function SearchAccount({ email, setEmail, error, loading,  handle
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email address or phone number"
             />
-                
-                {loading &&
-                
-                <BeatLoader  color="#18762f" loading={loading} size={10}  />
-                }
             {error && <div className="error_text">{error}</div>}
             <div className="reset_form_btns">
               <Link to="/login" className="gray_btn">
