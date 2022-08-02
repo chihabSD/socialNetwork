@@ -24,7 +24,9 @@
 </ul><h2>Screenshots</h2>
 
 <h4>Some of the features of this app</h4>
-<p><img style="width:50%; border:5px solid black" src="https://iili.io/ViGtuR.png" alt=""></p><p><img style="width:50%; border:5px solid black" src="https://iili.io/ViGyGt.png" alt=""></p><p><img style="width:50%; border:5px solid black" src="https://iili.io/ViM28G.png" alt=""></p><p><img style="width:50%; border:5px solid black" src="https://iili.io/ViMfwl.png" alt=""></p><h2>Setup</h2>
+<p align="center">
+  <img src="./screenshots/1.png" width="250" title="home">
+</p><h2>Setup</h2>
 <p>Followig are the requirements to run this project:</p><ul>
 <li>Node Package Manager (NPM)</li>
 </ul><ul>
@@ -36,7 +38,7 @@
 </ul><p><code style="margin-left:40px">npm install</code></p><ul>
 </ul><p><code style="margin-left:40px">npm start</code></p><ul>
 <li>Or you can directly visit</li>
-</ul><p><a href="https://social-network-psi-flame.vercel.app/" target="_blank"><code style="margin-left:40px">https://hansalshah007.github.io/readme-generator/</code></a></p><h2>Project Status</h2>
+</ul><p><a href="https://social-network-psi-flame.vercel.app/" target="_blank"><code style="margin-left:40px">https://social-network-psi-flame.vercel.app</code></a></p><h2>Project Status</h2>
 <p>All assentials are completed</p><h2>Improvements</h2>
 <ul>
 <li>A seperate tab for rendering markdown output can be introduced so that output can be visible in mobile view also.</li>
