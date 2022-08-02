@@ -25,7 +25,14 @@
 
 <h4>Some of the features of this app</h4>
 <p align="center">
-  <img src="./screenshots/1.png" width="250" title="home">
+  <img src="./screenshots/1.png" width="250" title="1">
+  <img src="./screenshots/2.png" width="250" title="2">
+  <img src="./screenshots/3.png" width="250" title="3">
+  <img src="./screenshots/4.png" width="250" title="4">
+  <img src="./screenshots/5.png" width="250" title="5">
+  <img src="./screenshots/6.png" width="250" title="6">
+  <img src="./screenshots/7.png" width="250" title="7">
+  <img src="./screenshots/8.png" width="250" title="7">
 </p><h2>Setup</h2>
 <p>Followig are the requirements to run this project:</p><ul>
 <li>Node Package Manager (NPM)</li>
