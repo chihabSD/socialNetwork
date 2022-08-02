@@ -18,13 +18,15 @@
 <li>Dark Mode</li>
 </ul><ul>
 
-<li>Simple UI</li>
+<li>Simple and Responsive UI</li>
 </ul><ul>
 
 </ul><h2>Screenshots</h2>
 
 <h4>Some of the features of this app</h4>
 <p align="center">
+  <img src="./screenshots/0.png" width="250" title="1">
+  <img src="./screenshots/0.1.png" width="250" title="1">
   <img src="./screenshots/1.png" width="250" title="1">
   <img src="./screenshots/2.png" width="250" title="2">
   <img src="./screenshots/3.png" width="250" title="3">
